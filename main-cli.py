@@ -1,9 +1,10 @@
+import asyncio
 import time
 from data_preparing import embedding,cache_embedding
 from chain_builder import Window
 embedding = embedding()
 cache_embedding = cache_embedding(embedding)
-def main():
+async def main():
     id_store = {}
     id = input("请输入窗口id:")
     if id not in id_store:
@@ -25,8 +26,8 @@ def main():
             current_window = id_store[new_id]
             print("\n切换成功,请您继续对话!")
             question = input("用户:")
-        current_window.run(question)
+        await current_window.run(question)
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
 
