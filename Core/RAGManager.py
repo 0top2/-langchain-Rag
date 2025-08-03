@@ -15,8 +15,8 @@ class RagManager:
         self.documents = load_doc()
         self.chunk = split_doc(self.documents,self.embedding)
         self.llm = llm()
+        self.retriever = None
         self.db = index_change_db(self.chunk,self.cache)
-        self.retriever = query_rewrite_retriever(Retriever(self.db.as_retriever(), self.chunk), self.llm)
         self.prompt = ChatPromptTemplate.from_messages([
             ('system', '你是一个专业的文档信息解读专家,请你根据文档里的内容和历史记录并结合一些常识来回答用户的问题,不用过于严谨,只输出答案,不要多余内容'
                        '文档内容:`{context}`'
@@ -24,8 +24,9 @@ class RagManager:
                        '历史记录:`{history}`'),
             ('user', '{input}')
         ])
-        self.chain = {"context": RunnableLambda(lambda x: x['input']) | self.retriever | format_doc,
-                      "history": RunnableLambda(lambda x: x['history']),
-                      "input": RunnableLambda(lambda x: x['input'])} | self.prompt | self.llm
+    def get_retriever(self):
+        return query_rewrite_retriever(Retriever(self.db.as_retriever(), self.chunk), self.llm)
+    def get_async_retriever(self):
+        return Retriever(self.db.as_retriever(), self.chunk)
     def get_info(self):
         return self.llm, self.embedding, self.cache

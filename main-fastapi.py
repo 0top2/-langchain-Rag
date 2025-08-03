@@ -5,11 +5,10 @@ import uvicorn
 from GitHub_Prepared_Rag.Config.config import file_upload_delete
 from Model.models import *
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body
-from GitHub_Prepared_Rag.Core.data_preparing import embedding,cache_embedding
-app = FastAPI()
-embedding = embedding()
-cache_embedding = cache_embedding(embedding)
+from Core.RAGManager import RagManager
+manager = RagManager()
 store = {}
+app = FastAPI()
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
     save_path = Path(file_upload_delete)
@@ -35,7 +34,7 @@ async def delete_file(file: str = Form(...)):
 @app.post("/chat_with_rag")
 async def chat(info : chat = Body(...)):
     if info.id not in store:
-        store[info.id] = Window(info.id,embedding,cache_embedding)
+        store[info.id] = Window(manager=manager,id=info.id,is_async=True)
     res = await store[info.id].run_api(info.input)
     return {
         "id": info.id,

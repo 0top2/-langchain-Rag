@@ -9,15 +9,17 @@ from .retriever_utils import index_change_db, query_rewrite_retriever, Retriever
 
 
 class Window():
-    def __init__(self,*,manager:RagManager,id):
+    def __init__(self,*,manager:RagManager,id,is_async = False):
         self.id = id
         self.embedding = manager.embedding
         self.chunk = manager.chunk
         self.llm = manager.llm
         self.cache = manager.cache
         self.db = manager.db
-        self.retriever = manager.retriever
-        self.chain = manager.chain
+        self.retriever = manager.get_async_retriever() if is_async else manager.get_retriever()
+        self.chain = self.chain = {"context": RunnableLambda(lambda x: x['input']) | self.retriever | format_doc,
+                      "history": RunnableLambda(lambda x: x['history']),
+                      "input": RunnableLambda(lambda x: x['input'])} | manager.prompt | self.llm
         self.chain_with_history = RunnableWithMessageHistory(
                                   self.chain,
                                   get_session_history,
