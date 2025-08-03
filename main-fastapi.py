@@ -1,11 +1,11 @@
 
 from pathlib import Path
-from chain_builder import Window
+from GitHub_Prepared_Rag.Core.chain_builder import Window
 import uvicorn
-from config import file_upload_delete
+from GitHub_Prepared_Rag.Config.config import file_upload_delete
 from Model.models import *
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body
-from data_preparing import embedding,cache_embedding
+from GitHub_Prepared_Rag.Core.data_preparing import embedding,cache_embedding
 app = FastAPI()
 embedding = embedding()
 cache_embedding = cache_embedding(embedding)

@@ -1,8 +1,8 @@
 import yaml
-with open("config.yml", "r", encoding="utf-8") as f:
+with open("Config/config.yml", "r", encoding="utf-8") as f:
     # 安全加载 YAML 内容（避免执行恶意代码）
     config = yaml.safe_load(f)
-
+DirectoryLoader_load_path = config["DirectoryLoader_path"]
 redis_url = config["redis_url"]
 save_path = config["save_path"]
 chunk_size = config["chunk_size"]
