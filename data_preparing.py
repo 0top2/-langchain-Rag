@@ -143,6 +143,6 @@ def Retriever(retriever,chunk):
     bm25_retriever = BM25Retriever.from_documents(chunk)
     retrievers = EnsembleRetriever(
                         retrievers=[bm25_retriever, retriever],
-                        weight = [0.1,0.9]
+                        weight = [0.3,0.7]
     )
     return retrievers

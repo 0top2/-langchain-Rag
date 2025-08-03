@@ -1,10 +1,10 @@
-import os
+
 from pathlib import Path
 from chain_builder import Window
 import uvicorn
 from config import file_upload_delete
-import fastapi
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from Model.models import *
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Body
 from data_preparing import embedding,cache_embedding
 app = FastAPI()
 embedding = embedding()
@@ -30,25 +30,18 @@ async def delete_file(file: str = Form(...)):
             raise HTTPException(404,"非法路径")
         file_path.unlink()
         return {"delete_filename": file,"delete":"successfully deleted"}
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
-@app.post("/rag")
-async def chat(
-        input: str = Form(...),
-        id: str = Form(...),
-):
-    if id not in store:
-        store[id] = Window(id,embedding,cache_embedding)
-    res = await store[id].run_api(input)
+
+@app.post("/chat_with_rag")
+async def chat(info : chat = Body(...)):
+    if info.id not in store:
+        store[info.id] = Window(info.id,embedding,cache_embedding)
+    res = await store[info.id].run_api(info.input)
     return {
-        "id": id,
+        "id": info.id,
         "result": res
     }
 
 
 
 uvicorn.run(app, host="localhost", port=8000)
-
-

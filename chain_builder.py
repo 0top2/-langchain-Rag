@@ -4,11 +4,11 @@ from Utils.get_session_history import get_session_history
 from Utils.format_doc import format_doc
 from data_preparing import doc_process,embedding,llm,cache_embedding,Retriever,query_rewrite_retriever,index_change_db
 class Window():
-    def __init__(self,ID,embedding,cache):
-        self.id = ID
+    def __init__(self,*,id,embedding,cache,llm):
+        self.id = id
         self.embedding = embedding
         self.chunk = doc_process(self.embedding)
-        self.llm = llm()
+        self.llm = llm
         self.cache = cache
         self.db = index_change_db(self.chunk,self.cache)
         self.retriever = query_rewrite_retriever(Retriever(self.db.as_retriever(),self.chunk),self.llm)
