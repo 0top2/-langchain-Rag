@@ -1,3 +1,5 @@
 .env
 Config/config.yml
 __pycache__/
+*.py[cod]
+*$py.class
