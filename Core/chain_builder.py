@@ -14,7 +14,6 @@ class Window():
         self.embedding = manager.embedding
         self.chunk = manager.chunk
         self.llm = manager.llm
-        self.cache = manager.cache
         self.db = manager.db
         self.retriever = manager.get_async_retriever() if is_async else manager.get_retriever()
         self.chain = self.chain = {"context": RunnableLambda(lambda x: x['input']) | self.retriever | format_doc,

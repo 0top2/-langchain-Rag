@@ -26,12 +26,11 @@ def embedding(model_name = "BAAI/bge-large-en-v1.5"):
                                           }
                                           )
 
-def cache_embedding(embedding):
-    store = RedisStore(redis_url=redis_url, namespace="vector")
-    # embedding = SentenceTransformer("BAAI/bge-large-en-v1.5")
-    cache = CacheBackedEmbeddings.from_bytes_store(
+def get_embedding_with_cache(embedding):
+        store = RedisStore(redis_url=redis_url, namespace="vector")
+        # embedding = SentenceTransformer("BAAI/bge-large-en-v1.5")
+        return CacheBackedEmbeddings.from_bytes_store(
         underlying_embeddings=embedding,
         document_embedding_cache=store,
         key_encoder="sha256"
-    )
-    return cache
+        )

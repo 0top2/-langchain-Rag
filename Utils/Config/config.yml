@@ -1,0 +1,44 @@
+llm_type : 'zhipuai'
+
+redis_url : 'redis://localhost:6379/0'
+
+zhipu_api_key : '88e99aaa3b5f4f40a40cb65099ced080.sod2xLcgApRv9lfZ'
+
+spark_api_key : '59ca950fdb44102359b5ca0dbafb47c6'
+spark_api_id : 'ffe0e8ed'
+spark_api_secret : 'Y2FhNDc2NjFlMTE3YTQwMTBmMjI1NzBj'
+
+save_path : 'save_store\FAISS_PATH'
+
+DirectoryLoader_path : 'Rag_source'
+
+chunk_size: 1200
+chunk_overlap: 80
+
+Database: 'faiss'
+update_database: false
+Milvus_config:
+  collection_name: "rag_database"  # 替换为你的集合名称
+  connection_args:
+    host: "localhost"
+    port: "19530"
+    user: "root"
+    password: "Milvus"
+    db_name: "my_database_1"
+  # 高级参数（可选）
+  index_params:
+    index_type: "IVF_FLAT"
+    metric_type: "IP"  # 余弦相似度（内积）
+    params:
+      nlist: 1
+  search_params:
+    nprobe: 1  # 搜索精度，数值越大精度越高但速度越慢
+  consistency_level: "Strong"
+
+
+
+
+embedding_model_url : 'D:\huggingface_model_cache\hub\models--BAAI--bge-large-en-v1.5\snapshots\d4aa6901d3a41ba39fb536a557fa166f842b0e09'
+dim : 1024
+
+file_upload_delete : 'D:/Langchain/langchainDemo/GitHub_Prepared_Rag/Rag_source'
