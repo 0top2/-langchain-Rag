@@ -44,9 +44,8 @@ def load_doc() -> List[Document]:
     # print(pdf.load()+text.load()+csv.load()+xlsx.load())
     return pdf.load()+text.load()+csv.load()+xlsx.load()
 
-# def upload(file):写到fast里,作为api同时写一个clear的api,清除指定的文件
 
-def split_doc(document:List[Document],embedding) -> List[Document]:
+def RS_Hybrid_split(document:List[Document],embedding) -> List[Document]:
     splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size,chunk_overlap=chunk_overlap,
                                               separators=["\n\n", "\n", "。", ""])
     chunk = splitter.split_documents(document)
@@ -60,3 +59,8 @@ def split_doc(document:List[Document],embedding) -> List[Document]:
         content_hash = hashlib.sha256(doc.page_content.encode()).hexdigest()[:8]
         doc.metadata["id"] = f"chunk_{i}_{content_hash}"
     return result
+
+def Parent_Child_splitter():
+    child_splitter = RecursiveCharacterTextSplitter(chunk_size=300)
+    parent_splitter = RecursiveCharacterTextSplitter(chunk_size=1500)
+    return parent_splitter,child_splitter
