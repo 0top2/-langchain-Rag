@@ -1,4 +1,4 @@
-from GitHub_Prepared_Rag.Utils.Milvus_utils import MilvusDB
+from GitHub_Prepared_Rag.Core.implementations.db_milvus import MilvusDB
 from GitHub_Prepared_Rag.Config.config import *
 
 class DBFactory:

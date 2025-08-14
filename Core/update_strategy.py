@@ -1,0 +1,16 @@
+from .abstraction_base.db_base import BaseVectorDB
+from .abstraction_base.update_strategy_base import UpdateStrategy
+
+class AppendStrategy(UpdateStrategy):
+    def execute(self,db:BaseVectorDB,chunks):
+        db.add_documents(chunks)
+
+
+class DropAndRecreateStrategy(UpdateStrategy):
+    def execute(self,db:BaseVectorDB,chunks):
+        db.drop_collection()
+        db.create_collection(chunks)
+
+class NoUpdateStrategy(UpdateStrategy):
+    def execute(self, db: BaseVectorDB, chunks):
+        print("启动时未进行更新，数据库保持原有状态")

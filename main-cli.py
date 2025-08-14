@@ -1,9 +1,20 @@
 import asyncio
 import time
 from Core.RAGManager import RagManager
+from GitHub_Prepared_Rag.Config.config import DirectoryLoader_load_path
+from GitHub_Prepared_Rag.Core.DocWatcher import docWatcher
 from GitHub_Prepared_Rag.Core.chain_builder import Window
+from GitHub_Prepared_Rag.Core.embedding_utils import embedding
 manager = RagManager()
 async def main():
+    manager = RagManager()
+    # 初始化文档监测器（监听Rag_source目录）
+    watcher = docWatcher(watch_dir=DirectoryLoader_load_path)
+    # 将RagManager注册为观察者（文档变化时通知它更新）
+    watcher.add_observer(manager)
+    # 启动监测器（非阻塞方式，用线程运行）
+    import threading
+    threading.Thread(target=watcher.start_watching, daemon=True).start()
     id_store = {}
     print("")
     id = input("请输入窗口id:")
