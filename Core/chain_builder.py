@@ -10,7 +10,6 @@ class Window():
     def __init__(self,*,manager:RagManager,id,is_async = False):
         self.id = id
         self.embedding = manager.embedding
-        self.chunk = manager.chunk
         self.llm = manager.llm
         self.db = manager.db
         self.retriever = manager.create_retriever(is_async=is_async)

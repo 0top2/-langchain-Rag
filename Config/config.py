@@ -12,6 +12,7 @@ save_path = config["save_path"]
 chunk_size = config["chunk_size"]
 chunk_overlap = config["chunk_overlap"]
 
+use_rerank = config["use_rerank"]
 
 #embedding模型相关配置参数
 embed_dim = config["dim"]

@@ -1,4 +1,6 @@
 import hashlib
+from pathlib import Path
+
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader, UnstructuredExcelLoader, \
     CSVLoader, DirectoryLoader
 from langchain_experimental.text_splitter import SemanticChunker
@@ -41,7 +43,19 @@ def load_doc() -> List[Document]:
     return pdf.load()+text.load()+csv.load()+xlsx.load()
 
 
-
+def load_single_doc(file_path):
+    suffix = Path(file_path).suffix
+    loading_map = {
+        ".pdf": PyPDFLoader,
+        ".docx": Docx2txtLoader,
+        ".txt": TextLoader,
+        ".xlsx": UnstructuredExcelLoader,
+        ".csv": CSVLoader
+    }
+    if suffix in loading_map:
+        loader = loading_map[suffix](str(file_path))
+        return loader.load()
+    return []
 
 def Parent_Child_splitter():
     child_splitter = RecursiveCharacterTextSplitter(chunk_size=300)

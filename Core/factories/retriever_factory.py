@@ -5,10 +5,7 @@ from GitHub_Prepared_Rag.Utils.change_faiss_index_IVFFLAT import change_faiss_in
 
 class RetrieverFactory:
     @staticmethod
-    def create_ensemble_retriever(
-            vector_retriever,
-            chunks
-    ):
+    def create_ensemble_retriever( vector_retriever, chunks):
         """创建混合检索器（BM25+向量检索）"""
         bm25_retriever = BM25Retriever.from_documents(chunks)
         return EnsembleRetriever(
@@ -47,3 +44,6 @@ class RetrieverFactory:
         )
         retriever.add_documents(docs)
         return retriever
+
+    def create_rerank_retriever(baseretriever):
+        pass
