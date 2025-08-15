@@ -7,7 +7,7 @@ from GitHub_Prepared_Rag.Core.factories.update_strategy_factory import StrategyF
 from GitHub_Prepared_Rag.Core.factories.splitter_factory import SplitterFactory
 from GitHub_Prepared_Rag.Core.factories.retriever_factory import RetrieverFactory
 from .observe_pattern import Observer
-from .factories.observer_updated_factory import ObserverUpdatedFactory
+from .factories.DocWatcher_updated_factory import DocWatcherUpdatedFactory
 class RagManager(Observer):
     def __init__(self):
         self.embedding = embedding()
@@ -36,7 +36,7 @@ class RagManager(Observer):
     def update(self,docs,pattern):
         self.documents = docs #有可能是新的,有可能是整体的重新加载一遍
         new_chunk = self.splitter.split(self.documents,self.embedding)
-        observer_updated = ObserverUpdatedFactory.createObserverUpdatedPattern(pattern)
+        observer_updated = DocWatcherUpdatedFactory.createDocUpdatedPattern(pattern)
         observer_updated.execute(self.db, new_chunk)
 
 

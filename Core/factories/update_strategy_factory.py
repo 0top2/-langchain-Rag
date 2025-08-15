@@ -11,7 +11,3 @@ class StrategyFactory:
             return AppendStrategy()
         else:
             raise ValueError(f"不支持的更新策略: {update_database}")
-
-    @staticmethod
-    def Update_database():
-        return DropAndRecreateStrategy()

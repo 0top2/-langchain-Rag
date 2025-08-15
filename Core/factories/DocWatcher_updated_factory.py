@@ -1,9 +1,9 @@
 from GitHub_Prepared_Rag.Core.update_strategy import AppendStrategy, DropAndRecreateStrategy
 
 
-class ObserverUpdatedFactory:
+class DocWatcherUpdatedFactory:
     @staticmethod
-    def createObserverUpdatedPattern(pattern):
+    def createDocUpdatedPattern(pattern):
         if pattern =='created':
             return AppendStrategy()
         elif pattern =='deleted' or pattern =='modified':
