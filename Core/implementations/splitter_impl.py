@@ -1,4 +1,5 @@
 import hashlib
+from GitHub_Prepared_Rag.Config.config import *
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from ..abstraction_base.splitter_base import SplitterBase
@@ -6,9 +7,9 @@ from ..abstraction_base.splitter_base import SplitterBase
 
 class HybridSplitter(SplitterBase):
     """混合分块策略（递归+语义）"""
-    def __init__(self, chunk_size: int, chunk_overlap: int):
-        self.chunk_size = chunk_size
-        self.chunk_overlap = chunk_overlap
+    def __init__(self):
+        self.chunk_size = split_strategy['hybrid']['chunk_size']
+        self.chunk_overlap = split_strategy['hybrid']['chunk_overlap']
 
     def split(self, docs, embedding):
         # 递归字符拆分
@@ -31,9 +32,9 @@ class HybridSplitter(SplitterBase):
 
 class ParentChildSplitter(SplitterBase):
     """父-子文档分块策略"""
-    def __init__(self, parent_chunk_size: int, child_chunk_size: int):
-        self.parent_chunk_size = parent_chunk_size
-        self.child_chunk_size = child_chunk_size
+    def __init__(self):
+        self.parent_chunk_size = split_strategy['parent_child']['parent_size']
+        self.child_chunk_size = split_strategy['parent_child']['child_size']
 
     def split(self, docs, embedding):
         # 此处返回父文档拆分结果（根据实际需求调整）

@@ -4,16 +4,10 @@ from GitHub_Prepared_Rag.Config.config import *
 class SplitterFactory:
     @staticmethod
     def create_splitter(strategy_type=None):
-        strategy_type = strategy_type or split_strategy
+        strategy_type = strategy_type or split_strategy['type']
         if strategy_type == 'hybrid':
-            return HybridSplitter(
-                chunk_size=300,
-                chunk_overlap=50
-            )
+            return HybridSplitter()
         elif strategy_type == 'parent_child':
-            return ParentChildSplitter(
-                parent_chunk_size=1500,  # 可从config.yml读取
-                child_chunk_size=300
-            )
+            return ParentChildSplitter()
         else:
             raise ValueError(f"不支持的分块策略: {strategy_type}")

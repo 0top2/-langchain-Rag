@@ -13,7 +13,7 @@ class Window():
         self.llm = manager.llm
         self.db = manager.db
         self.retriever = manager.create_retriever(is_async=is_async)
-        self.chain = self.chain = {"context": RunnableLambda(lambda x: x['input']) | self.retriever | format_doc,
+        self.chain = {"context": RunnableLambda(lambda x: x['input']) | self.retriever | format_doc,
                       "history": RunnableLambda(lambda x: x['history']),
                       "input": RunnableLambda(lambda x: x['input'])} | manager.prompt | self.llm
         self.chain_with_history = RunnableWithMessageHistory(

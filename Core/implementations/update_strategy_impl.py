@@ -1,5 +1,5 @@
-from .abstraction_base.db_base import BaseVectorDB
-from .abstraction_base.update_strategy_base import UpdateStrategy
+from GitHub_Prepared_Rag.Core.abstraction_base.db_base import BaseVectorDB
+from GitHub_Prepared_Rag.Core.abstraction_base.update_strategy_base import UpdateStrategy
 
 class AppendStrategy(UpdateStrategy):
     def execute(self,db:BaseVectorDB,new_chunks):

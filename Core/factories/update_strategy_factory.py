@@ -1,4 +1,4 @@
-from ..update_strategy import *
+from GitHub_Prepared_Rag.Core.implementations.update_strategy_impl import *
 from GitHub_Prepared_Rag.Config.config import *
 class StrategyFactory:
     @staticmethod

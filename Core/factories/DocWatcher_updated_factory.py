@@ -1,4 +1,4 @@
-from GitHub_Prepared_Rag.Core.update_strategy import AppendStrategy, DropAndRecreateStrategy
+from GitHub_Prepared_Rag.Core.implementations.update_strategy_impl import AppendStrategy, DropAndRecreateStrategy
 
 
 class DocWatcherUpdatedFactory:
